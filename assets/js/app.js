@@ -1,8 +1,23 @@
 /**
  * app.js
- * Ponto de entrada da aplicação: inicialização e controle de eventos de interface.
+ * Ponto de entrada da aplicação: inicialização, eventos de interface e sanitização de dados.
  */
 import { navegar } from './router.js';
+
+/**
+ * Função utilitária de sanitização para prevenir vulnerabilidades DOM-based XSS
+ * @param {string} str - Texto não confiável vindo do usuário
+ * @returns {string} Texto seguro com caracteres HTML escapados
+ */
+function escaparHTML(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 /**
  * Configura eventos globais e delegação de eventos na página
@@ -54,11 +69,14 @@ function configurarEventosGlobais() {
         console.warn('Não foi possível salvar no localStorage:', err);
       }
 
+      // Sanitização defensiva da entrada do usuário contra DOM-based XSS
+      const nomeSeguro = escaparHTML(voluntario.nome);
+
       // Exibe alerta de sucesso dinâmico substituindo o formulário
       const main = document.getElementById('conteudo');
       main.innerHTML = `
         <div class="alerta alerta-sucesso" role="status">
-          ✓ Cadastro enviado com sucesso, <strong>${voluntario.nome}</strong>! Entraremos em contato via WhatsApp em breve.
+          ✓ Cadastro enviado com sucesso, <strong>${nomeSeguro}</strong>! Entraremos em contato via WhatsApp em breve.
         </div>
         <div class="card_conteudo" style="text-align: center; margin-top: var(--espacamento-3);">
           <h3>Obrigado por apoiar a SOS Animais Alfenas!</h3>
