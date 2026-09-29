@@ -10,6 +10,7 @@ export const listaProjetos = [
     titulo: "Resgate e Acolhimento",
     descricao: "Identificação, resgate nas ruas e suporte emergencial a cães e gatos feridos ou abandonados.",
     imagem: "assets/img/resgate.jpg",
+    alt: "Voluntária sorrindo segura a patinha de um cão de pelo caramelo",
     badge: "Urgente",
     acao: "Apoiar Projeto"
   },
@@ -18,6 +19,7 @@ export const listaProjetos = [
     titulo: "Feiras de Adoção",
     descricao: "Realizadas no último final de semana de cada mês no estacionamento do estádio municipal.",
     imagem: "assets/img/feira.jpg",
+    alt: "Gaiola em feira de adoção com placa de madeira escrita “Não compre, adote!” e um animal descansando numa caminha rosa",
     badge: "Mensal",
     acao: "Ser Voluntário"
   },
@@ -26,6 +28,7 @@ export const listaProjetos = [
     titulo: "Castração Solidária",
     descricao: "Em convênio com a Escola de Veterinária, todos os animais são castrados antes da entrega.",
     imagem: "assets/img/castracao.jpg",
+    alt: "Veterinário de luvas azuis examinando com estetoscópio um cão de pelo preto e branco",
     badge: "Parceria",
     acao: "Conhecer Mais"
   }
@@ -39,7 +42,7 @@ export const listaProjetos = [
 export const cardProjetoTemplate = (projeto) => `
   <article id="${projeto.id}" class="card">
     <div class="card-media-wrapper">
-      <img src="${projeto.imagem}" alt="${projeto.titulo}" class="card-media">
+      <img src="${projeto.imagem}" alt="${projeto.alt}" class="card-media">
       <span class="card-badge">${projeto.badge}</span>
     </div>
     <div class="card-body">
