@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+  <meta name="author" content="Thales de Faria César">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>SOS Animais Alfenas</title>
+</head>
+
+<body class="layout_sistema">
+
+  <img id="img" src="assets/img/caes_gatos.jpg" alt="Foto com rostos de cães e gatos incentivando a adoção">
+
+  <header id="topo">
+    <h1>SOS Animais Alfenas</h1>
+    <p>Uma ONG VIRTUAL! Junte-se a nós para transformar a realidade dos animais em nossa região.</p>      
+  </header>
+
+  <!-- MENU RESPONSIVO (HAMBÚRGUER + DROPDOWN) -->
+  <aside id="menu">
+    <input type="checkbox" id="menu-check" class="menu-checkbox" aria-label="Abrir menu">
+    <label for="menu-check" class="menu-toggle" aria-label="Menu de navegação">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <nav class="nav-container" aria-label="Navegação Principal">
+      <ul class="nav-lista">
+        <li><a class="nav-link" href="#/">Início</a></li>
+        <li class="dropdown">
+          <a class="nav-link" href="#/projetos">Projetos ▾</a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-link" href="#/projetos#resgate">Resgates</a></li>
+            <li><a class="nav-link" href="#/projetos#feiras">Feiras de Adoção</a></li>
+            <li><a class="nav-link" href="#/projetos#castracao">Castração Solidária</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-link" href="#/cadastro">Seja um voluntário</a></li> 
+      </ul>
+    </nav>  
+  </aside>
+  
+  <!-- CONTEÚDO DINÂMICO INJETADO PELA SPA -->
+  <main id="conteudo" aria-live="polite">
+    <!-- Renderizado dinamicamente via router.js e templates.js -->
+  </main>
+
+  <!-- MODAL NATIVO (<dialog>) -->
+  <dialog id="modal-termos" class="modal">
+    <div class="modal-header">
+      <h3>Termo de Voluntariado e Responsabilidade</h3>
+      <button type="button" class="modal-close" data-close-modal aria-label="Fechar modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Ao se inscrever como voluntário da <strong>ONG SOS Animais Alfenas</strong>, você se compromete a tratar todos os animais resgatados com respeito, zelar pela segurança dos mesmos e seguir as orientações da coordenação durante resgates e feiras.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primario" data-close-modal>Entendido e De Acordo</button>
+    </div>
+  </dialog>
+
+  <footer id="rodape">
+    <a id="contato" href="mailto:contato@sosanimaisalfenas.org.br">contato@sosanimaisalfenas.org.br</a>
+    <p>&copy; 2026 ONG SOS Animais Alfenas - Todos os direitos reservados</p>
+  </footer>
+
+  <!-- SCRIPT PRINCIPAL SPA (MÓDULO ES6) -->
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

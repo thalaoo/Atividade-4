@@ -1,0 +1,832 @@
+/* ==========================================================================
+   1. DESIGN TOKENS E VARIÁVEIS GLOBAIS (:root)
+   ========================================================================== */
+:root {
+  /* Paleta Semântica */
+  --cor-primaria: #3498db;
+  --cor-primaria-hover: #2980b9;
+  --cor-secundaria: #2c3e50;
+  --cor-secundaria-hover: #1a252f;
+  --cor-sucesso: #27ae60;
+  --cor-sucesso-fundo: #eafaf1;
+  --cor-sucesso-texto: #1e7e34;
+  --cor-alerta: #e74c3c;
+  --cor-alerta-fundo: #fdf2f2;
+  --cor-aviso: #f39c12;
+  --cor-aviso-fundo: #fef9e7;
+  --cor-aviso-texto: #9a6309;
+  --cor-info: #2980b9;
+  --cor-info-fundo: #ebf5fb;
+
+  /* Tons Neutros */
+  --cor-fundo: #f0f2f5;
+  --cor-superficie: #ffffff;
+  --cor-borda: #cbd5e0;
+  --cor-borda-foco: #3498db;
+  --cor-texto-principal: #2d3748;
+  --cor-texto-mutado: #718096;
+
+  /* Escala Tipográfica */
+  --fonte-xs:   0.75rem;    /* 12px */
+  --fonte-sm:   0.875rem;   /* 14px */
+  --fonte-base: 1rem;       /* 16px */
+  --fonte-lg:   1.25rem;    /* 20px */
+  --fonte-xl:   1.75rem;    /* 28px */
+  --fonte-xxl:  2.25rem;    /* 36px */
+
+  /* Espaçamentos Modulares (Base 4/8px) */
+  --espacamento-1: 4px;
+  --espacamento-2: 8px;
+  --espacamento-3: 16px;
+  --espacamento-4: 24px;
+  --espacamento-5: 32px;
+  --espacamento-6: 48px;
+
+  /* Formas, Raios e Sombras */
+  --raio-borda-sm: 4px;
+  --raio-borda-md: 8px;
+  --raio-borda-lg: 16px;
+  --raio-borda-pilula: 9999px;
+  
+  --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.06);
+  --sombra-elevada: 0 10px 25px rgba(0, 0, 0, 0.12);
+  --sombra-modal: 0 20px 40px rgba(0, 0, 0, 0.25);
+
+  /* Transições Padrão */
+  --transicao-rapida: 0.2s ease;
+  --transicao-padrao: 0.3s ease;
+
+  /* Grid */
+  --grid-colunas: 12;
+}
+
+/* ==========================================================================
+   2. RESET E ESTILOS GERAIS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--cor-texto-principal);
+  font-size: var(--fonte-base);
+  background-color: var(--cor-fundo);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Foco acessível global para teclado */
+:focus-visible {
+  outline: 3px solid var(--cor-primaria);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   3. ESTRUTURA GERAL: HEADER, BANNER E TOPO
+   ========================================================================== */
+#img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#topo {
+  text-align: center;
+  padding: var(--espacamento-3);
+}
+
+#topo h1 {
+  font-size: var(--fonte-xl);
+  color: var(--cor-secundaria);
+  margin-bottom: var(--espacamento-2);
+}
+
+#topo p {
+  color: var(--cor-texto-mutado);
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   4. NAVEGAÇÃO: HAMBÚRGUER (MOBILE) E DROPDOWN (DESKTOP)
+   ========================================================================== */
+#menu {
+  position: relative;
+  padding: 0 var(--espacamento-3);
+}
+
+/* Checkbox oculto para toggle puro em CSS (Zero JS mandatório) */
+.menu-checkbox {
+  display: none;
+}
+
+/* Botão Ícone Hambúrguer */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 44px;
+  height: 40px;
+  padding: var(--espacamento-2);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  cursor: pointer;
+  margin-bottom: var(--espacamento-2);
+  transition: background-color var(--transicao-rapida);
+}
+
+.menu-toggle:hover {
+  background-color: #f8fafc;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--cor-secundaria);
+  border-radius: var(--raio-borda-sm);
+  transition: transform var(--transicao-padrao), opacity var(--transicao-padrao);
+}
+
+/* Animação do botão para 'X' quando ativo */
+.menu-checkbox:checked + .menu-toggle span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-checkbox:checked + .menu-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-checkbox:checked + .menu-toggle span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Lista Principal do Menu (Mobile: fechada por padrão) */
+.nav-lista {
+  display: none;
+  list-style: none;
+  flex-direction: column;
+  gap: var(--espacamento-2);
+  background-color: var(--cor-superficie);
+  padding: var(--espacamento-3);
+  border-radius: var(--raio-borda-md);
+  border: 1px solid var(--cor-borda);
+  box-shadow: var(--sombra-suave);
+}
+
+/* Revela o menu quando o toggle está ativo */
+.menu-checkbox:checked ~ .nav-container .nav-lista {
+  display: flex;
+}
+
+/* Links do Menu */
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espacamento-2) var(--espacamento-3);
+  color: var(--cor-secundaria);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  text-decoration: none;
+  font-size: var(--fonte-sm);
+  font-weight: 600;
+  transition: all var(--transicao-rapida);
+  cursor: pointer;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link.ativo {
+  background-color: var(--cor-primaria);
+  color: var(--cor-superficie);
+  border-color: var(--cor-primaria-hover);
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  list-style: none;
+  padding: var(--espacamento-2) 0;
+  margin-top: var(--espacamento-1);
+  background-color: #f8fafc;
+  border-radius: var(--raio-borda-md);
+  border: 1px solid var(--cor-borda);
+  flex-direction: column;
+  gap: var(--espacamento-1);
+}
+
+.dropdown-menu .nav-link {
+  border: none;
+  background: transparent;
+  padding: var(--espacamento-2) var(--espacamento-4);
+  font-size: var(--fonte-xs);
+}
+
+.dropdown-menu .nav-link:hover {
+  background-color: var(--cor-primaria);
+  color: var(--cor-superficie);
+}
+
+/* Abertura do dropdown no mobile ao tocar/focar */
+.dropdown:focus-within .dropdown-menu,
+.dropdown:hover .dropdown-menu {
+  display: flex;
+}
+
+/* ==========================================================================
+   5. SISTEMA DE CARDS MODULARES E ACESSÍVEIS
+   ========================================================================== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espacamento-3);
+  width: 100%;
+}
+
+.card {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  box-shadow: var(--sombra-suave);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transicao-padrao), box-shadow var(--transicao-padrao), border-color var(--transicao-padrao);
+}
+
+/* Interatividade e Elevação */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-elevada);
+  border-color: var(--cor-primaria);
+}
+
+/* Acessibilidade para o Card inteiro quando há links internos */
+.card:focus-within {
+  border-color: var(--cor-primaria);
+}
+
+/* Imagem / Mídia do Card */
+.card-media {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .card-media {
+  transform: scale(1.03);
+}
+
+.card-media-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.card-badge {
+  position: absolute;
+  top: var(--espacamento-2);
+  right: var(--espacamento-2);
+  background-color: rgba(44, 62, 80, 0.85);
+  color: var(--cor-superficie);
+  padding: 2px 8px;
+  border-radius: var(--raio-borda-pilula);
+  font-size: var(--fonte-xs);
+  font-weight: 600;
+  backdrop-filter: blur(2px);
+}
+
+/* Corpo e Conteúdo Textual */
+.card-body {
+  padding: var(--espacamento-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacamento-2);
+  flex-grow: 1;
+}
+
+.card-title {
+  font-size: var(--fonte-lg);
+  color: var(--cor-secundaria);
+  font-weight: 700;
+}
+
+.card-text {
+  color: var(--cor-texto-principal);
+  font-size: var(--fonte-base);
+  line-height: 1.6;
+}
+
+/* Rodapé do Card */
+.card-footer {
+  padding: var(--espacamento-3) var(--espacamento-4);
+  background-color: #fafbfc;
+  border-top: 1px solid var(--cor-borda);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Compatibilidade com o container genérico legado */
+.card_conteudo {
+  width: 100%;
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda-md);
+  box-shadow: var(--sombra-suave);
+  padding: var(--espacamento-4);
+  border: 1px solid var(--cor-borda);
+}
+
+.card_conteudo hr {
+  margin: var(--espacamento-3) 0;
+  border: 0;
+  border-top: 1px solid var(--cor-borda);
+}
+
+/* ==========================================================================
+   6. FORMULÁRIOS, BOTÕES E VALIDAÇÃO SEMÂNTICA
+   ========================================================================== */
+.form-cadastro fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacamento-3);
+}
+
+.form-cadastro legend {
+  font-size: var(--fonte-lg);
+  font-weight: 700;
+  color: var(--cor-secundaria);
+  margin-bottom: var(--espacamento-3);
+  line-height: 1.4;
+}
+
+.form-cadastro .campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacamento-1);
+}
+
+.form-cadastro label {
+  font-size: var(--fonte-sm);
+  font-weight: 600;
+  color: var(--cor-texto-principal);
+}
+
+.form-cadastro .obrigatorio {
+  color: var(--cor-alerta);
+}
+
+/* Entradas de dados (Inputs, Selects, Textareas) */
+.form-cadastro input[type="text"],
+.form-cadastro input[type="email"],
+.form-cadastro input[type="tel"],
+.form-cadastro select,
+.form-cadastro textarea {
+  width: 100%;
+  padding: var(--espacamento-2) var(--espacamento-3);
+  font-size: var(--fonte-base);
+  font-family: inherit;
+  color: var(--cor-texto-principal);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  outline: none;
+  transition: border-color var(--transicao-rapida), box-shadow var(--transicao-rapida), background-color var(--transicao-rapida);
+}
+
+/* Estado de Foco */
+.form-cadastro input:focus,
+.form-cadastro select:focus,
+.form-cadastro textarea:focus {
+  border-color: var(--cor-borda-foco);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+}
+
+/* Validação Semântica Interativa (:user-invalid e :user-valid) */
+.form-cadastro input:user-invalid,
+.form-cadastro select:user-invalid,
+.form-cadastro textarea:user-invalid {
+  border-color: var(--cor-alerta);
+  background-color: var(--cor-alerta-fundo);
+}
+
+.form-cadastro input:user-invalid:focus,
+.form-cadastro textarea:user-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+}
+
+.form-cadastro input:user-valid:not(:placeholder-shown),
+.form-cadastro select:user-valid:not(:placeholder-shown) {
+  border-color: var(--cor-sucesso);
+  background-color: var(--cor-sucesso-fundo);
+}
+
+/* Estados Desabilitados (:disabled) */
+.form-cadastro input:disabled,
+.form-cadastro select:disabled,
+.form-cadastro textarea:disabled,
+.btn:disabled {
+  background-color: var(--cor-fundo);
+  border-color: var(--cor-borda);
+  color: var(--cor-texto-mutado);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-cadastro textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Checkbox Semântico */
+.campo_checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--espacamento-2);
+  margin-top: var(--espacamento-1);
+}
+
+.campo_checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cor-primaria);
+  cursor: pointer;
+}
+
+.campo_checkbox label {
+  font-size: var(--fonte-sm);
+  cursor: pointer;
+}
+
+/* Sistema de Botões */
+.btn,
+.btn-enviar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: var(--fonte-base);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--raio-borda-md);
+  padding: var(--espacamento-3) var(--espacamento-4);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--transicao-rapida), transform 0.1s ease, box-shadow var(--transicao-rapida);
+}
+
+.btn-enviar,
+.btn-sucesso {
+  background-color: var(--cor-sucesso);
+  color: var(--cor-superficie);
+}
+
+.btn-enviar:hover,
+.btn-sucesso:hover {
+  filter: brightness(0.92);
+}
+
+.btn-primario {
+  background-color: var(--cor-primaria);
+  color: var(--cor-superficie);
+}
+
+.btn-primario:hover {
+  background-color: var(--cor-primaria-hover);
+}
+
+.btn-secundario {
+  background-color: var(--cor-secundaria);
+  color: var(--cor-superficie);
+}
+
+.btn-secundario:hover {
+  background-color: var(--cor-secundaria-hover);
+}
+
+.btn:active,
+.btn-enviar:active {
+  transform: scale(0.98);
+}
+
+.linha-dupla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacamento-3);
+}
+
+/* ==========================================================================
+   7. MODAIS (<dialog>) E ALERTAS CONTEXTUAIS
+   ========================================================================== */
+/* Alertas Contextuais Integrados */
+.alerta {
+  padding: var(--espacamento-3) var(--espacamento-4);
+  border-radius: var(--raio-borda-md);
+  font-size: var(--fonte-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--espacamento-2);
+  margin-bottom: var(--espacamento-3);
+  border: 1px solid transparent;
+}
+
+.alerta-sucesso {
+  background-color: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso-texto);
+  border-color: #c3e6cb;
+}
+
+.alerta-aviso {
+  background-color: var(--cor-aviso-fundo);
+  color: var(--cor-aviso-texto);
+  border-color: #ffeeba;
+}
+
+.alerta-erro {
+  background-color: var(--cor-alerta-fundo);
+  color: var(--cor-alerta);
+  border-color: #f8d7da;
+}
+
+.alerta-info {
+  background-color: var(--cor-info-fundo);
+  color: var(--cor-info);
+  border-color: #bee5eb;
+}
+
+/* Modal Nativo (<dialog>) */
+dialog.modal {
+  margin: auto;
+  padding: var(--espacamento-5);
+  border: none;
+  border-radius: var(--raio-borda-lg);
+  background-color: var(--cor-superficie);
+  max-width: 520px;
+  width: 90%;
+  box-shadow: var(--sombra-modal);
+}
+
+/* Animação suave para modal nativo */
+dialog.modal[open] {
+  animation: modalEntrada var(--transicao-padrao) forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Fundo com desfoque e escurecimento do Modal */
+dialog.modal::backdrop {
+  background-color: rgba(44, 62, 80, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espacamento-3);
+}
+
+.modal-header h3 {
+  font-size: var(--fonte-lg);
+  color: var(--cor-secundaria);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: var(--fonte-lg);
+  cursor: pointer;
+  color: var(--cor-texto-mutado);
+  line-height: 1;
+  padding: var(--espacamento-1);
+}
+
+.modal-close:hover {
+  color: var(--cor-alerta);
+}
+
+.modal-footer {
+  margin-top: var(--espacamento-4);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espacamento-2);
+}
+
+/* ==========================================================================
+   8. RODAPÉ
+   ========================================================================== */
+#rodape {
+  background-color: var(--cor-secundaria);
+  color: var(--cor-superficie);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacamento-2);
+  padding: var(--espacamento-4);
+  text-align: center;
+  font-size: var(--fonte-sm);
+}
+
+#rodape a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#rodape a:hover {
+  text-decoration: underline;
+}
+
+#rodape p {
+  color: #a0aec0;
+  font-size: var(--fonte-xs);
+}
+
+/* ==========================================================================
+   9. SISTEMA DE GRID MOBILE-FIRST E OS 5 BREAKPOINTS ESTRITOS
+   ========================================================================== */
+
+/* --- BASE: Mobile Compacto (< 576px) ---
+   Coluna única com 100% de largura por item */
+.layout_sistema {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  gap: var(--espacamento-2);
+}
+
+#conteudo,
+#quem_somos {
+  padding: 0 var(--espacamento-3);
+}
+
+/* --- BREAKPOINT 1: Smartphones em Paisagem / Grandes (min-width: 576px) --- */
+@media (min-width: 576px) {
+  .layout_sistema {
+    gap: var(--espacamento-3);
+  }
+
+  #topo {
+    padding: var(--espacamento-4) var(--espacamento-3);
+  }
+
+  .linha-dupla {
+    flex-direction: row;
+  }
+
+  .linha-dupla .campo {
+    flex: 1;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- BREAKPOINT 2: Tablets (min-width: 768px) ---
+   Ativação da grade de 12 colunas com proporção 4/8 */
+@media (min-width: 768px) {
+  .layout_sistema {
+    grid-template-columns: repeat(var(--grid-colunas), 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    gap: var(--espacamento-3);
+  }
+
+  #img {
+    grid-column: 1 / span 12;
+    grid-row: 1;
+  }
+
+  #topo {
+    grid-column: 1 / span 12;
+    grid-row: 2;
+  }
+
+  /* Oculta botão hambúrguer e exibe a lista permanentemente */
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav-lista {
+    display: flex;
+    box-shadow: none;
+  }
+
+  /* Dropdown desktop posicionado em absoluto */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    z-index: 50;
+    box-shadow: var(--sombra-elevada);
+    background-color: var(--cor-superficie);
+  }
+
+  /* Menu: 4 colunas */
+  #menu {
+    grid-column: 1 / span 4;
+    grid-row: 3;
+    padding-left: var(--espacamento-3);
+    padding-right: 0;
+  }
+
+  /* Conteúdo: 8 colunas */
+  #conteudo,
+  #quem_somos {
+    grid-column: 5 / span 8;
+    grid-row: 3;
+    padding-left: 0;
+    padding-right: var(--espacamento-3);
+  }
+
+  #rodape {
+    grid-column: 1 / span 12;
+    grid-row: 4;
+  }
+}
+
+/* --- BREAKPOINT 3: Laptops / Desktop Médio (min-width: 992px) ---
+   Rebalanceamento para 3/9 colunas e cards em 3 colunas */
+@media (min-width: 992px) {
+  .layout_sistema {
+    gap: var(--espacamento-4);
+  }
+
+  /* Menu: 3 colunas */
+  #menu {
+    grid-column: 1 / span 3;
+    padding-left: var(--espacamento-4);
+  }
+
+  /* Conteúdo: 9 colunas */
+  #conteudo,
+  #quem_somos {
+    grid-column: 4 / span 9;
+    padding-right: var(--espacamento-4);
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- BREAKPOINT 4: Desktops Padrão (min-width: 1200px) ---
+   Tipografia reforçada e respiro ampliado */
+@media (min-width: 1200px) {
+  .layout_sistema {
+    gap: var(--espacamento-5);
+  }
+
+  #topo h1 {
+    font-size: var(--fonte-xxl);
+  }
+
+  #menu {
+    padding-left: var(--espacamento-5);
+  }
+
+  #conteudo,
+  #quem_somos {
+    padding-right: var(--espacamento-5);
+  }
+
+  .card_conteudo {
+    padding: var(--espacamento-5);
+  }
+}
+
+/* --- BREAKPOINT 5: Monitores Ultra-Wide (min-width: 1400px) ---
+   Contenção de largura máxima e centralização horizontal */
+@media (min-width: 1400px) {
+  .layout_sistema {
+    max-width: 1360px;
+    margin: 0 auto;
+    box-shadow: var(--sombra-suave);
+  }
+}
